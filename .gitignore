@@ -1,0 +1,57 @@
+# Python / Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environment
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment variables & secret keys
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Database
+*.sqlite3
+*.sqlite
+db.sqlite3
+
+# Django & Media / Static
+local_settings.py
+staticfiles/
+media/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Logs
+*.log
+logs/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.cache/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+
+# OS generated files
+.DS_Store
+Thumbs.db
