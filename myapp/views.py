@@ -18,6 +18,7 @@ from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 # pyrefly: ignore [missing-import]
 from rest_framework_simplejwt.tokens import RefreshToken
+from drf_spectacular.utils import extend_schema
 
 from . import services
 from .filters import LeadFilter
@@ -64,8 +65,10 @@ class MeView(APIView):
         return Response(serializer.data)
 
 
+@extend_schema(request=SignupSerializer, responses={201: UserSerializer})
 class SignupView(APIView):
     permission_classes = [permissions.AllowAny]
+    serializer_class = SignupSerializer
 
     def post(self, request):
         serializer = SignupSerializer(data=request.data)
@@ -79,8 +82,10 @@ class SignupView(APIView):
         }, status=status.HTTP_201_CREATED)
 
 
+@extend_schema(request=LoginSerializer)
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
+    serializer_class = LoginSerializer
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -119,8 +124,10 @@ class LogoutView(APIView):
         return Response({"message": "Successfully logged out"}, status=status.HTTP_200_OK)
 
 
+@extend_schema(request=ChangePasswordSerializer)
 class ChangePasswordView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ChangePasswordSerializer
 
     def post(self, request):
         serializer = ChangePasswordSerializer(data=request.data)
@@ -135,8 +142,10 @@ class ChangePasswordView(APIView):
         return Response({"message": "Password changed successfully", "tokens": tokens}, status=status.HTTP_200_OK)
 
 
+@extend_schema(request=ResetPasswordRequestSerializer)
 class ResetPasswordRequestView(APIView):
     permission_classes = [permissions.AllowAny]
+    serializer_class = ResetPasswordRequestSerializer
 
     def post(self, request):
         serializer = ResetPasswordRequestSerializer(data=request.data)
@@ -190,8 +199,10 @@ class ResetPasswordRequestView(APIView):
         }, status=status.HTTP_200_OK)
 
 
+@extend_schema(request=ResetPasswordConfirmSerializer)
 class ResetPasswordConfirmView(APIView):
     permission_classes = [permissions.AllowAny]
+    serializer_class = ResetPasswordConfirmSerializer
 
     def post(self, request):
         serializer = ResetPasswordConfirmSerializer(data=request.data)
@@ -316,10 +327,12 @@ def _status_payload(data):
     }
 
 
+@extend_schema(request=IncomingCallWebhookSerializer)
 class IncomingCallWebhookView(APIView):
     permission_classes = [AllowAny]
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = "webhooks"
+    serializer_class = IncomingCallWebhookSerializer
 
     def post(self, request):
         if not verify_exotel_signature(request):
@@ -355,10 +368,12 @@ class IncomingCallWebhookView(APIView):
         return Response({"call_id": call.display_id, "status": call.status}, status=201)
 
 
+@extend_schema(request=CallStatusWebhookSerializer)
 class CallStatusWebhookView(APIView):
     permission_classes = [AllowAny]
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = "webhooks"
+    serializer_class = CallStatusWebhookSerializer
 
     def post(self, request):
         if not verify_exotel_signature(request):

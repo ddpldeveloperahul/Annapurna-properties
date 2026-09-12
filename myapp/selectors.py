@@ -1,7 +1,9 @@
+# pyrefly: ignore [missing-import]
 from .models import Lead
 
 
 def get_lead_by_mobile(mobile: str):
+    # pyrefly: ignore [missing-import]
     from .phone import normalize_indian_mobile
 
     normalized = normalize_indian_mobile(mobile)

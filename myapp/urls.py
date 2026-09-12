@@ -1,13 +1,13 @@
 from django.urls import include, path
+# pyrefly: ignore [missing-import]
 from rest_framework.routers import DefaultRouter
+# pyrefly: ignore [missing-import]
 from rest_framework_simplejwt.views import TokenRefreshView
 
-from .views import (
-    AccountViewSet, AgentViewSet, CallStatusWebhookView, CallViewSet,
-    ChangePasswordView, DashboardMetricsView, FollowupViewSet, IncomingCallWebhookView, LeadViewSet,
-    LoginView, LogoutView, MeView, ResetPasswordConfirmView, ResetPasswordRequestView,
-    SignupView, WhatsAppMessageViewSet
-)
+
+# pyrefly: ignore [missing-import]
+from .views import AccountViewSet, AgentViewSet, CallStatusWebhookView, CallViewSet,ChangePasswordView, DashboardMetricsView, FollowupViewSet, IncomingCallWebhookView, LeadViewSet,LoginView, LogoutView, MeView, ResetPasswordConfirmView, ResetPasswordRequestView,SignupView, WhatsAppMessageViewSet
+
 
 router = DefaultRouter()
 router.register("accounts", AccountViewSet, basename="account")

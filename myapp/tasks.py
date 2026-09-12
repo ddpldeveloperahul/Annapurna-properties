@@ -8,6 +8,7 @@ Contains all 4 worker task pipelines (calls, leads, summaries, whatsapp) directl
 5. send_followup_whatsapp (whatsapp)
 """
 import logging
+# pyrefly: ignore [missing-import]
 from celery import shared_task
 
 logger = logging.getLogger("anpurna_properties")
