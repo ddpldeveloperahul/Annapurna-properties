@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from django.db.models import Count, Q
+from django.shortcuts import render
 from django.utils import timezone
 from rest_framework import permissions, status, viewsets
 from rest_framework.authtoken.models import Token
@@ -479,3 +480,23 @@ class DashboardMetricsView(APIView):
             },
             "leads_by_status": leads_by_status,
         })
+
+
+def home_view(request):
+    total_leads = Lead.objects.count()
+    total_calls = Call.objects.count()
+    total_whatsapp = WhatsAppMessage.objects.count()
+    total_followups = Followup.objects.count()
+    recent_leads = Lead.objects.all().order_by("-created_at")[:6]
+    recent_calls = Call.objects.all().order_by("-created_at")[:6]
+    context = {
+        "total_leads": total_leads,
+        "total_calls": total_calls,
+        "total_whatsapp": total_whatsapp,
+        "total_followups": total_followups,
+        "recent_leads": recent_leads,
+        "recent_calls": recent_calls,
+        "mock_mode": getattr(settings, "AI_CALLING_MOCK_PROVIDERS", True),
+    }
+    return render(request, "home.html", context)
+

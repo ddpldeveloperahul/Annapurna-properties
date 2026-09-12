@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="gold">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Annapurna Properties — Voice AI CRM & Lead Automation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       COLOR THEMES (Default: Royal Gold & Luxury Midnight Navy)
+       ========================================================= */
+    :root, [data-theme="gold"] {
+      --bg-primary: #070a12;
+      --bg-secondary: #0d1220;
+      --card-bg: rgba(15, 21, 37, 0.78);
+      --card-border: rgba(245, 158, 11, 0.14);
+      --card-hover-border: rgba(245, 158, 11, 0.45);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --accent-primary: #f59e0b;
+      --accent-primary-hover: #d97706;
+      --accent-primary-gradient: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+      --accent-glow: rgba(245, 158, 11, 0.28);
+      
+      --accent-secondary: #38bdf8;
+      --accent-secondary-gradient: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+      --accent-secondary-glow: rgba(56, 189, 248, 0.25);
+      
+      --hero-gradient: linear-gradient(to right, #ffffff 20%, #fde68a 60%, #f59e0b 100%);
+      --radial-1: rgba(245, 158, 11, 0.12);
+      --radial-2: rgba(99, 102, 241, 0.14);
+      --radial-3: rgba(56, 189, 248, 0.08);
+      --grid-line: rgba(255, 255, 255, 0.02);
+      --badge-bg: rgba(245, 158, 11, 0.12);
+      --badge-border: rgba(245, 158, 11, 0.3);
+      --badge-text: #fcd34d;
+      --console-bg: #03050a;
+      --console-text: #fde68a;
+    }
+
+    [data-theme="sapphire"] {
+      --bg-primary: #060913;
+      --bg-secondary: #0b1124;
+      --card-bg: rgba(13, 20, 39, 0.78);
+      --card-border: rgba(59, 130, 246, 0.18);
+      --card-hover-border: rgba(59, 130, 246, 0.5);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --accent-primary: #3b82f6;
+      --accent-primary-hover: #1d4ed8;
+      --accent-primary-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      --accent-glow: rgba(59, 130, 246, 0.35);
+      
+      --accent-secondary: #06b6d4;
+      --accent-secondary-gradient: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+      --accent-secondary-glow: rgba(6, 182, 212, 0.25);
+      
+      --hero-gradient: linear-gradient(to right, #ffffff 20%, #93c5fd 60%, #3b82f6 100%);
+      --radial-1: rgba(59, 130, 246, 0.16);
+      --radial-2: rgba(147, 51, 234, 0.14);
+      --radial-3: rgba(6, 182, 212, 0.08);
+      --grid-line: rgba(255, 255, 255, 0.02);
+      --badge-bg: rgba(59, 130, 246, 0.12);
+      --badge-border: rgba(59, 130, 246, 0.3);
+      --badge-text: #93c5fd;
+      --console-bg: #02050e;
+      --console-text: #93c5fd;
+    }
+
+    [data-theme="emerald"] {
+      --bg-primary: #070b14;
+      --bg-secondary: #0d1527;
+      --card-bg: rgba(17, 24, 39, 0.78);
+      --card-border: rgba(16, 185, 129, 0.15);
+      --card-hover-border: rgba(16, 185, 129, 0.45);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      
+      --accent-primary: #10b981;
+      --accent-primary-hover: #059669;
+      --accent-primary-gradient: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      --accent-glow: rgba(16, 185, 129, 0.3);
+      
+      --accent-secondary: #6366f1;
+      --accent-secondary-gradient: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+      --accent-secondary-glow: rgba(99, 102, 241, 0.25);
+      
+      --hero-gradient: linear-gradient(to right, #ffffff 20%, #a7f3d0 60%, #10b981 100%);
+      --radial-1: rgba(16, 185, 129, 0.14);
+      --radial-2: rgba(99, 102, 241, 0.12);
+      --radial-3: rgba(245, 158, 11, 0.08);
+      --grid-line: rgba(255, 255, 255, 0.02);
+      --badge-bg: rgba(16, 185, 129, 0.12);
+      --badge-border: rgba(16, 185, 129, 0.3);
+      --badge-text: #6ee7b7;
+      --console-bg: #040711;
+      --console-text: #a7f3d0;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-border: rgba(226, 232, 240, 0.9);
+      --card-hover-border: rgba(217, 119, 6, 0.4);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      
+      --accent-primary: #d97706;
+      --accent-primary-hover: #b45309;
+      --accent-primary-gradient: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+      --accent-glow: rgba(245, 158, 11, 0.2);
+      
+      --accent-secondary: #0284c7;
+      --accent-secondary-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      --accent-secondary-glow: rgba(2, 132, 199, 0.15);
+      
+      --hero-gradient: linear-gradient(to right, #0f172a 20%, #b45309 80%);
+      --radial-1: rgba(245, 158, 11, 0.08);
+      --radial-2: rgba(59, 130, 246, 0.06);
+      --radial-3: rgba(16, 185, 129, 0.05);
+      --grid-line: rgba(0, 0, 0, 0.03);
+      --badge-bg: rgba(245, 158, 11, 0.12);
+      --badge-border: rgba(245, 158, 11, 0.25);
+      --badge-text: #b45309;
+      --console-bg: #0f172a;
+      --console-text: #fde68a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 18% 18%, var(--radial-1) 0%, transparent 45%),
+        radial-gradient(circle at 82% 22%, var(--radial-2) 0%, transparent 50%),
+        radial-gradient(circle at 50% 85%, var(--radial-3) 0%, transparent 55%);
+      background-attachment: fixed;
+    }
+
+    /* Ambient noise & grid */
+    .grid-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-size: 44px 44px;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--card-border);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 10, 18, 0.85);
+    }
+
+    [data-theme="light"] .navbar {
+      background: rgba(248, 250, 252, 0.88);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--accent-primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .brand-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 3px 9px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      border-radius: 20px;
+      border: 1px solid var(--badge-border);
+      text-transform: uppercase;
+      display: inline-block;
+      margin-left: 6px;
+    }
+
+    .nav-right-cluster {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* Theme Switcher */
+    .theme-switcher {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    [data-theme="light"] .theme-switcher {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .theme-btn {
+      border: none;
+      background: transparent;
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .theme-btn:hover {
+      color: var(--text-main);
+    }
+
+    .theme-btn.active {
+      background: var(--accent-primary-gradient);
+      color: #fff;
+      box-shadow: 0 2px 8px var(--accent-glow);
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .nav-btn-ghost {
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    [data-theme="light"] .nav-btn-ghost {
+      background: #fff;
+    }
+
+    .nav-btn-ghost:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--card-hover-border);
+    }
+
+    .nav-btn-primary {
+      background: var(--accent-primary-gradient);
+      color: #fff;
+      box-shadow: 0 4px 14px var(--accent-glow);
+      border: none;
+    }
+
+    .nav-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--accent-glow);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 70px 0 45px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+      border-radius: 30px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--badge-text);
+      margin-bottom: 24px;
+    }
+
+    .hero-badge-pulse {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 var(--accent-glow);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 var(--accent-glow); }
+      70% { box-shadow: 0 0 0 9px rgba(0, 0, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: var(--hero-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 740px;
+      margin: 0 auto 36px;
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin: 50px 0 70px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--card-hover-border);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent-primary), transparent);
+    }
+
+    .stat-card.stat-2::before {
+      background: linear-gradient(90deg, var(--accent-secondary), transparent);
+    }
+    .stat-card.stat-3::before {
+      background: linear-gradient(90deg, #ec4899, transparent);
+    }
+    .stat-card.stat-4::before {
+      background: linear-gradient(90deg, #10b981, transparent);
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .stat-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .stat-icon {
+      font-size: 1.4rem;
+      opacity: 0.9;
+    }
+
+    .stat-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Workflow Pipeline Section */
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      position: relative;
+      margin-bottom: 70px;
+    }
+
+    .workflow-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 28px 22px;
+      backdrop-filter: blur(14px);
+      position: relative;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .workflow-card:hover {
+      border-color: var(--card-hover-border);
+      transform: translateY(-4px);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--badge-bg);
+      color: var(--accent-primary);
+      font-weight: 800;
+      font-size: 0.88rem;
+      margin-bottom: 18px;
+      border: 1px solid var(--badge-border);
+    }
+
+    .workflow-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .workflow-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .tag-badge {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+    }
+
+    /* Live Testing Console Section */
+    .tester-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 70px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+    }
+
+    .tester-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .tester-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-main);
+    }
+
+    .tester-controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-test {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-test:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--card-hover-border);
+      transform: translateY(-1px);
+    }
+
+    .btn-test-primary {
+      background: var(--accent-primary-gradient);
+      border: none;
+      color: #fff;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    .btn-test-primary:hover {
+      box-shadow: 0 6px 20px var(--accent-glow);
+    }
+
+    .console-box {
+      background: var(--console-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--console-text);
+      max-height: 280px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .console-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+    }
+
+    /* Feeds Grid: Recent Leads & Calls */
+    .feeds-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 70px;
+    }
+
+    .feed-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .feed-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .feed-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .feed-link {
+      font-size: 0.84rem;
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .feed-link:hover {
+      text-decoration: underline;
+    }
+
+    .feed-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      border: 1px solid var(--card-border);
+      transition: background 0.15s ease;
+    }
+
+    [data-theme="light"] .feed-item {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .feed-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .feed-item-info strong {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      display: block;
+    }
+
+    .feed-item-info span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .status-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: capitalize;
+    }
+
+    .status-new { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+    .status-qualified { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .status-completed { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .status-needs-human { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--card-border);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .footer a {
+      color: var(--accent-primary);
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .stats-grid, .workflow-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .feeds-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-title {
+        font-size: 2.7rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 14px 0;
+      }
+      .nav-right-cluster {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .stats-grid, .workflow-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-title {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-overlay"></div>
+
+  <header class="navbar">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <a href="/" class="brand">
+        <div class="brand-logo">🏢</div>
+        <div>
+          <span class="brand-title">Annapurna Properties</span>
+          <span class="brand-tag">Voice AI CRM</span>
+        </div>
+      </a>
+
+      <div class="nav-right-cluster">
+        <!-- Live Theme Switcher -->
+        <div class="theme-switcher">
+          <button class="theme-btn active" onclick="setTheme('gold', this)" title="Royal Gold Theme">👑 Gold</button>
+          <button class="theme-btn" onclick="setTheme('sapphire', this)" title="Sapphire Blue Theme">🌊 Blue</button>
+          <button class="theme-btn" onclick="setTheme('emerald', this)" title="Emerald Mint Theme">🌿 Mint</button>
+          <button class="theme-btn" onclick="setTheme('light', this)" title="Executive Light Theme">☀️ Light</button>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <a href="/api/docs/" target="_blank" class="nav-btn nav-btn-primary">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Swagger Docs
+          </a>
+          <a href="/admin/" target="_blank" class="nav-btn nav-btn-ghost">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Admin
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-badge">
+        <div class="hero-badge-pulse"></div>
+        <span>AI Telephony Live Engine • {% if mock_mode %}Dev Mock Mode Active{% else %}Production Live{% endif %}</span>
+      </div>
+
+      <h1 class="hero-title">
+        Next-Gen Voice AI & Real Estate<br>Lead Automation
+      </h1>
+
+      <p class="hero-subtitle">
+        Transforming incoming customer enquiries into verified, qualified real estate leads in real-time. Powered by Exotel Telephony, ElevenLabs Conversational Voice, OpenAI Intent Extraction, and Meta WhatsApp automation.
+      </p>
+
+      <div class="hero-actions">
+        <a href="/api/docs/" target="_blank" class="nav-btn nav-btn-primary" style="padding: 13px 28px; font-size: 1rem;">
+          🚀 Open Interactive Swagger UI
+        </a>
+        <a href="#simulator" class="nav-btn nav-btn-ghost" style="padding: 13px 26px; font-size: 1rem;">
+          ⚡ Live Testing Console
+        </a>
+        <a href="/admin/" target="_blank" class="nav-btn nav-btn-ghost" style="padding: 13px 26px; font-size: 1rem;">
+          🛡️ Django Admin
+        </a>
+      </div>
+    </section>
+
+    <!-- Live Stats Grid -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">TOTAL LEADS</span>
+          <span class="stat-icon">👥</span>
+        </div>
+        <div class="stat-value" id="stat-leads">{{ total_leads }}</div>
+        <div class="stat-desc">Captured in Annapurna CRM</div>
+      </div>
+
+      <div class="stat-card stat-2">
+        <div class="stat-header">
+          <span class="stat-title">VOICE CALLS</span>
+          <span class="stat-icon">📞</span>
+        </div>
+        <div class="stat-value" id="stat-calls">{{ total_calls }}</div>
+        <div class="stat-desc">Processed via Exotel & ElevenLabs</div>
+      </div>
+
+      <div class="stat-card stat-3">
+        <div class="stat-header">
+          <span class="stat-title">WHATSAPP SENT</span>
+          <span class="stat-icon">💬</span>
+        </div>
+        <div class="stat-value" id="stat-whatsapp">{{ total_whatsapp }}</div>
+        <div class="stat-desc">Automated acknowledgments sent</div>
+      </div>
+
+      <div class="stat-card stat-4">
+        <div class="stat-header">
+          <span class="stat-title">PENDING FOLLOWUPS</span>
+          <span class="stat-icon">📅</span>
+        </div>
+        <div class="stat-value" id="stat-followups">{{ total_followups }}</div>
+        <div class="stat-desc">Active tasks assigned to agents</div>
+      </div>
+    </section>
+
+    <!-- 4-Pillar Pipeline -->
+    <section>
+      <div class="section-header">
+        <h2 class="section-title">Autonomous 4-Stage Lead Pipeline</h2>
+        <p class="section-desc">How Annapurna Properties handles customer calls end-to-end</p>
+      </div>
+
+      <div class="workflow-grid">
+        <div class="workflow-card">
+          <div class="step-number">01</div>
+          <h3>Exotel Telephony</h3>
+          <p>Receives inbound customer calls via cloud virtual number and streams PCM 16kHz audio over secure WebSockets.</p>
+          <span class="tag-badge">WebSockets (WSS)</span>
+        </div>
+
+        <div class="workflow-card">
+          <div class="step-number">02</div>
+          <h3>ElevenLabs Voice AI</h3>
+          <p>Real-time bidirectional speech agent greets caller in Hindi/Hinglish, gathers budget, location, property type.</p>
+          <span class="tag-badge">Conversational AI</span>
+        </div>
+
+        <div class="workflow-card">
+          <div class="step-number">03</div>
+          <h3>OpenAI Intelligence</h3>
+          <p>Generates post-call summary, scores customer interest, auto-creates Lead in CRM, and schedules Agent follow-up.</p>
+          <span class="tag-badge">Structured Outputs</span>
+        </div>
+
+        <div class="workflow-card">
+          <div class="step-number">04</div>
+          <h3>Meta WhatsApp Cloud</h3>
+          <p>Instantly delivers personalized WhatsApp brochure & confirmation template to customer mobile via Celery workers.</p>
+          <span class="tag-badge">Meta Cloud API</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Interactive Test Console -->
+    <section id="simulator" class="tester-container">
+      <div class="tester-header">
+        <div>
+          <div class="tester-title">
+            <span>⚡ Interactive Webhook & API Simulator</span>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 4px;">
+            Test the live backend endpoints directly without opening Postman.
+          </p>
+        </div>
+
+        <div class="tester-controls">
+          <button class="btn-test btn-test-primary" onclick="triggerIncomingCall()">
+            📞 Simulate Inbound Call
+          </button>
+          <button class="btn-test" onclick="triggerCompleteCall()">
+            🏁 Simulate Call Completed
+          </button>
+          <button class="btn-test" onclick="fetchMetrics()">
+            📊 Fetch Real-time Metrics
+          </button>
+        </div>
+      </div>
+
+      <div class="console-box" id="consoleBox">
+        <div class="console-topbar">
+          <span>LIVE RESPONSE CONSOLE</span>
+          <span id="responseStatus">READY</span>
+        </div>
+        <code id="responseBody">// Click any button above to test API endpoints in real-time...</code>
+      </div>
+    </section>
+
+    <!-- Feeds Grid: Recent Leads & Recent Calls -->
+    <section class="feeds-grid">
+      <div class="feed-card">
+        <div class="feed-header">
+          <span class="feed-title">Recent CRM Leads</span>
+          <a href="/api/docs/#/api/api_v1_leads_list" target="_blank" class="feed-link">View All Leads →</a>
+        </div>
+        <div id="leadsList">
+          {% for lead in recent_leads %}
+          <div class="feed-item">
+            <div class="feed-item-info">
+              <strong>{{ lead.name }} ({{ lead.display_id }})</strong>
+              <span>{{ lead.requirement_type }} {{ lead.property_type }} • {{ lead.location }}</span>
+            </div>
+            <span class="status-pill {% if lead.status == 'Qualified' %}status-qualified{% elif lead.status == 'Needs Human Follow-up' %}status-needs-human{% else %}status-new{% endif %}">
+              {{ lead.status }}
+            </span>
+          </div>
+          {% empty %}
+          <p style="color: var(--text-muted); font-size: 0.88rem;">No leads recorded yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="feed-card">
+        <div class="feed-header">
+          <span class="feed-title">Recent Voice AI Calls</span>
+          <a href="/api/docs/#/api/api_v1_calls_list" target="_blank" class="feed-link">View All Calls →</a>
+        </div>
+        <div id="callsList">
+          {% for call in recent_calls %}
+          <div class="feed-item">
+            <div class="feed-item-info">
+              <strong>{{ call.display_id }} • {{ call.from_number }}</strong>
+              <span>Duration: {{ call.duration_sec }}s • {{ call.direction }}</span>
+            </div>
+            <span class="status-pill {% if call.status == 'Completed' %}status-completed{% else %}status-new{% endif %}">
+              {{ call.status }}
+            </span>
+          </div>
+          {% empty %}
+          <p style="color: var(--text-muted); font-size: 0.88rem;">No calls logged yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>
+        <strong>Annapurna Properties</strong> — AI Calling & Real Estate CRM Backend Engine
+      </p>
+      <p style="margin-top: 8px; font-size: 0.8rem;">
+        Django 5.2 • Django REST Framework • Celery • Redis • Exotel • ElevenLabs • OpenAI • Meta Cloud API
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme Switcher Logic
+    function setTheme(themeName, btnEl) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem('annapurna_theme', themeName);
+      document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+    }
+
+    // Restore saved theme on load
+    const savedTheme = localStorage.getItem('annapurna_theme') || 'gold';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      if (btn.innerText.toLowerCase().includes(savedTheme)) {
+        document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+    });
+
+    // Test Simulator Logic
+    const sampleCallSid = "sim_" + Math.random().toString(36).substring(2, 10);
+    const consoleBox = document.getElementById("responseBody");
+    const statusBox = document.getElementById("responseStatus");
+
+    async function triggerIncomingCall() {
+      statusBox.innerText = "POSTING INCOMING CALL...";
+      consoleBox.innerText = "Sending POST to /api/v1/telephony/webhooks/incoming-call/...";
+      try {
+        const payload = {
+          call_sid: sampleCallSid,
+          from_number: "+91" + Math.floor(6000000000 + Math.random() * 3999999999),
+          to_number: "+918000012345",
+          direction: "Inbound"
+        };
+        const res = await fetch("/api/v1/telephony/webhooks/incoming-call/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        statusBox.innerText = `STATUS: ${res.status}`;
+        consoleBox.innerText = `// POST /api/v1/telephony/webhooks/incoming-call/ [${res.status}]\n` + JSON.stringify(data, null, 2);
+      } catch (err) {
+        statusBox.innerText = "ERROR";
+        consoleBox.innerText = String(err);
+      }
+    }
+
+    async function triggerCompleteCall() {
+      statusBox.innerText = "POSTING CALL STATUS (COMPLETED)...";
+      consoleBox.innerText = "Sending POST to /api/v1/telephony/webhooks/call-status/...";
+      try {
+        const payload = {
+          call_sid: sampleCallSid,
+          status: "Completed",
+          duration_sec: 145,
+          recording_url: "https://api.exotel.com/recordings/" + sampleCallSid + ".mp3"
+        };
+        const res = await fetch("/api/v1/telephony/webhooks/call-status/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        statusBox.innerText = `STATUS: ${res.status}`;
+        consoleBox.innerText = `// POST /api/v1/telephony/webhooks/call-status/ [${res.status}]\n` + 
+          `// Background Celery pipeline triggered (Transcript -> OpenAI Summary -> Lead -> WhatsApp)\n\n` + 
+          JSON.stringify(data, null, 2);
+      } catch (err) {
+        statusBox.innerText = "ERROR";
+        consoleBox.innerText = String(err);
+      }
+    }
+
+    async function fetchMetrics() {
+      statusBox.innerText = "FETCHING METRICS...";
+      try {
+        const res = await fetch("/api/v1/dashboard/metrics/");
+        if (res.status === 401) {
+          statusBox.innerText = "401 UNAUTHORIZED";
+          consoleBox.innerText = `// /api/v1/dashboard/metrics/ requires JWT Authentication.\n// Log in via Swagger Docs (/api/docs/) to get your access token!`;
+          return;
+        }
+        const data = await res.json();
+        statusBox.innerText = `STATUS: ${res.status}`;
+        consoleBox.innerText = JSON.stringify(data, null, 2);
+      } catch (err) {
+        statusBox.innerText = "ERROR";
+        consoleBox.innerText = String(err);
+      }
+    }
+  </script>
+</body>
+</html>
