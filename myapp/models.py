@@ -365,6 +365,8 @@ class WhatsAppMessage(TimeStampedModel):
 
     to_number = models.CharField(max_length=20)
     template_name = models.CharField(max_length=100)
+    template_language = models.CharField(max_length=10, default="hi")
+    parameters = models.JSONField(default=list, blank=True)
     body = models.TextField()
 
     provider_message_id = models.CharField(max_length=100, blank=True, default="")

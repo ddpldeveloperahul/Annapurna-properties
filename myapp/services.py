@@ -108,21 +108,41 @@ def assign_agent(lead: Lead, agent, actor=None):
 
 
 # --- WhatsApp Services ----------------------------------------------------
+def send_whatsapp_template(phone_number: str, template_name: str, language: str, parameters: list, lead=None, call=None):
+    from myapp.phone import normalize_indian_mobile
+    normalized_phone = normalize_indian_mobile(phone_number)
+
+    # Render a preview body for storage
+    body_preview = f"Template: {template_name}\nLanguage: {language}\nParams: {parameters}"
+
+    message = WhatsAppMessage.objects.create(
+        lead=lead,
+        call=call,
+        to_number=normalized_phone,
+        template_name=template_name,
+        template_language=language,
+        parameters=parameters,
+        body=body_preview,
+        status=WhatsAppMessage.Status.QUEUED,
+    )
+    return _dispatch_whatsapp(message)
+
+
 def send_lead_acknowledgement(lead, call=None):
     existing = WhatsAppMessage.objects.filter(lead=lead, call=call, template_name=settings.WHATSAPP_TEMPLATE_NAME).first()
     if existing:
         return existing
 
-    body = _render_whatsapp_template(lead)
-    message = WhatsAppMessage.objects.create(
-        lead=lead,
-        call=call,
-        to_number=lead.mobile,
+    # Assuming template {{1}} is customer name
+    parameters = [lead.name or "Customer"]
+    return send_whatsapp_template(
+        phone_number=lead.mobile,
         template_name=settings.WHATSAPP_TEMPLATE_NAME,
-        body=body,
-        status=WhatsAppMessage.Status.QUEUED,
+        language=settings.WHATSAPP_TEMPLATE_LANG,
+        parameters=parameters,
+        lead=lead,
+        call=call
     )
-    return _dispatch_whatsapp(message)
 
 
 def resend_whatsapp(message: WhatsAppMessage):
@@ -138,8 +158,9 @@ def _dispatch_whatsapp(message: WhatsAppMessage):
         result = client.send_template(
             to_number=message.to_number,
             template_name=message.template_name,
+            language=message.template_language,
             body_preview=message.body,
-            parameters=_template_parameters(message.lead),
+            parameters=message.parameters,
         )
         message.provider_message_id = result["message_id"]
         message.status = WhatsAppMessage.Status.SENT

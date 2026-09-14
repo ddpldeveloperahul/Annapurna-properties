@@ -310,10 +310,16 @@ class LeadViewSet(viewsets.ModelViewSet):
             return LeadDetailSerializer
         return LeadReadSerializer
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        user = self.request.user
+        if user and user.is_authenticated and getattr(user, "role", None) == User.Role.CRM and hasattr(user, "agent_profile"):
+            qs = qs.filter(assigned_to=user.agent_profile)
+        return qs
+
     def perform_create(self, serializer):
         user = self.request.user
-        assigned_to = serializer.validated_data.get("assigned_to")
-        if not assigned_to and user and getattr(user, "role", None) == User.Role.CRM and hasattr(user, "agent_profile"):
+        if user and getattr(user, "role", None) == User.Role.CRM and hasattr(user, "agent_profile"):
             lead = serializer.save(assigned_to=user.agent_profile)
         else:
             lead = serializer.save()

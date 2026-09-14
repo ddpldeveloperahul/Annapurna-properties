@@ -6,7 +6,7 @@ class WhatsAppClient:
     def __init__(self):
         self.phone_number_id=settings.WHATSAPP_PHONE_NUMBER_ID; self.access_token=settings.WHATSAPP_ACCESS_TOKEN
         self.mock=settings.AI_CALLING_MOCK_PROVIDERS; self.timeout=settings.PROVIDER_HTTP_TIMEOUT_SECONDS
-    def send_template(self,to_number,template_name,body_preview="",parameters=None):
+    def send_template(self,to_number,template_name,language,body_preview="",parameters=None):
         if self.mock:
             if random.random()<0.08: raise WhatsAppSendError("Recipient number not on WhatsApp")
             return {"message_id":f"wamock.{uuid.uuid4().hex[:16]}"}
@@ -14,7 +14,7 @@ class WhatsAppClient:
         components=[]
         if parameters:
             components=[{"type":"body","parameters":[{"type":"text","text":str(x)} for x in parameters]}]
-        payload={"messaging_product":"whatsapp","to":to_number.lstrip('+'),"type":"template","template":{"name":template_name,"language":{"code":settings.WHATSAPP_TEMPLATE_LANG}}}
+        payload={"messaging_product":"whatsapp","to":to_number.lstrip('+'),"type":"template","template":{"name":template_name,"language":{"code":language}}}
         if components: payload["template"]["components"]=components
         try:
             r=requests.post(url,json=payload,headers={"Authorization":f"Bearer {self.access_token}","Content-Type":"application/json"},timeout=self.timeout); r.raise_for_status(); data=r.json()

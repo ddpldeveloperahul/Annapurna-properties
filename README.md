@@ -35,6 +35,10 @@ It automates customer voice qualification calls end-to-end: receiving incoming c
 7. **Interactive Swagger Documentation**:
    - Integrated OpenAPI 3.0 schema and interactive Swagger UI documentation at `/api/docs/`.
 
+8. **Dynamic CRM Agent Assignment**:
+   - Transaction-safe, database-backed round-robin assignment supporting N agents.
+   - Preserves existing agent assignments for returning callers and skips unavailable agents.
+
 ---
 
 ## 📁 Project Structure
@@ -145,7 +149,7 @@ Server starts at `http://127.0.0.1:8000/`.
 
 ## 🧪 Running Tests
 
-Run the complete 12-test automated test suite:
+Run the complete 19-test automated test suite (including Assignment logic tests):
 ```bash
 python manage.py test tests
 ```
@@ -172,6 +176,11 @@ python manage.py test tests
 | `GET` / `POST` | `/api/v1/leads/` | List (Filterable & Searchable) or Create Lead |
 | `GET` / `PATCH` | `/api/v1/leads/{display_id}/` | Get Lead Details / Update Status |
 | `GET` | `/api/v1/agents/` | List Active CRM Agents & Workload |
+| `POST` | `/api/v1/agents/{id}/activate/` | Activate CRM Agent |
+| `POST` | `/api/v1/agents/{id}/deactivate/` | Deactivate CRM Agent |
+| `GET` | `/api/v1/accounts/` | List User Accounts (Admin Only) |
+| `POST` | `/api/v1/accounts/{id}/activate/` | Activate User Account |
+| `POST` | `/api/v1/accounts/{id}/deactivate/` | Deactivate User Account |
 | `GET` | `/api/v1/dashboard/metrics/` | Realtime Dashboard Analytics |
 
 ### 📞 Telephony, Calls & WhatsApp
