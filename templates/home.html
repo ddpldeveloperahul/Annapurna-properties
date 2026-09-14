@@ -104,7 +104,7 @@
     [data-theme="light"] {
       --bg-primary: #f8fafc;
       --bg-secondary: #f1f5f9;
-      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-bg: rgba(255, 255, 255, 0.92);
       --card-border: rgba(226, 232, 240, 0.9);
       --card-hover-border: rgba(217, 119, 6, 0.4);
       --text-main: #0f172a;
@@ -152,7 +152,6 @@
       background-attachment: fixed;
     }
 
-    /* Ambient noise & grid */
     .grid-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -177,7 +176,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 18px 0;
+      padding: 16px 0;
       border-bottom: 1px solid var(--card-border);
       backdrop-filter: blur(14px);
       position: sticky;
@@ -235,7 +234,8 @@
     .nav-right-cluster {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     /* Theme Switcher */
@@ -256,7 +256,7 @@
     .theme-btn {
       border: none;
       background: transparent;
-      padding: 5px 11px;
+      padding: 5px 10px;
       border-radius: 20px;
       font-size: 0.76rem;
       font-weight: 700;
@@ -264,7 +264,7 @@
       color: var(--text-muted);
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       transition: all 0.2s ease;
     }
 
@@ -281,10 +281,10 @@
     .nav-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 9px 18px;
+      gap: 7px;
+      padding: 8px 16px;
       border-radius: 10px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.2s ease;
@@ -317,6 +317,20 @@
     .nav-btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px var(--accent-glow);
+    }
+
+    /* Auth User Badge in Navbar */
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+      border-radius: 20px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--badge-text);
     }
 
     /* Hero Section */
@@ -720,6 +734,360 @@
     .status-completed { background: rgba(16, 185, 129, 0.15); color: #34d399; }
     .status-needs-human { background: rgba(239, 68, 68, 0.15); color: #f87171; }
 
+    /* =========================================================
+       AUTHENTICATION MODAL STYLES (Glassmorphism & High-Tech)
+       ========================================================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(4, 7, 15, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .auth-modal {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 480px;
+      padding: 36px 32px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 40px var(--accent-glow);
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.25s ease;
+      backdrop-filter: blur(20px);
+    }
+
+    .modal-overlay.active .auth-modal {
+      transform: translateY(0);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .auth-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--accent-primary-gradient);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 12px;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .auth-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .auth-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Auth Tabs */
+    .auth-tabs {
+      display: flex;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 24px;
+      gap: 4px;
+    }
+
+    .auth-tab-btn {
+      flex: 1;
+      padding: 9px 0;
+      text-align: center;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .auth-tab-btn.active {
+      background: var(--accent-primary-gradient);
+      color: #fff;
+      box-shadow: 0 2px 10px var(--accent-glow);
+    }
+
+    /* Form Inputs */
+    .form-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    [data-theme="light"] .form-input {
+      background: #fff;
+      border-color: #cbd5e1;
+    }
+
+    .form-input:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .input-toggle-pwd {
+      position: absolute;
+      right: 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-select {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      outline: none;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    [data-theme="light"] .form-select {
+      background: #fff;
+      border-color: #cbd5e1;
+    }
+
+    .form-select option {
+      background: var(--bg-secondary);
+      color: var(--text-main);
+    }
+
+    .form-submit-btn {
+      width: 100%;
+      padding: 13px 0;
+      border-radius: 12px;
+      font-size: 0.96rem;
+      font-weight: 700;
+      background: var(--accent-primary-gradient);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+      box-shadow: 0 4px 16px var(--accent-glow);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .form-submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px var(--accent-glow);
+    }
+
+    .form-submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .auth-alert {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      margin-bottom: 16px;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .auth-alert.alert-error {
+      background: rgba(239, 68, 68, 0.15);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      display: block !important;
+    }
+
+    .auth-alert.alert-success {
+      background: rgba(16, 185, 129, 0.15);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      display: block !important;
+    }
+
+    /* Role Badges */
+    .nav-role-badge {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .nav-role-badge.role-admin {
+      background: rgba(245, 158, 11, 0.22);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.5);
+    }
+
+    .nav-role-badge.role-crm {
+      background: rgba(56, 189, 248, 0.18);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+
+    /* Demo Quick Creds */
+    .demo-creds-box {
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed var(--card-border);
+      border-radius: 10px;
+    }
+
+    .demo-creds-title {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .demo-creds-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn-demo-pill {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 7px;
+      padding: 8px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .btn-demo-pill:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--accent-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-demo-pill span.sub {
+      font-size: 0.67rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .auth-footer a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+
     /* Footer */
     .footer {
       border-top: 1px solid var(--card-border);
@@ -786,14 +1154,35 @@
           <button class="theme-btn" onclick="setTheme('light', this)" title="Executive Light Theme">☀️ Light</button>
         </div>
 
-        <div style="display: flex; gap: 10px;">
-          <a href="/api/docs/" target="_blank" class="nav-btn nav-btn-primary">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-            Swagger Docs
+        <!-- Dynamic Auth Cluster (Guest vs Logged-in) -->
+        <div id="authGuestCluster" style="display: flex; gap: 8px;">
+          <button class="nav-btn nav-btn-ghost" onclick="openAuthModal('login')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+            Log In
+          </button>
+          <button class="nav-btn nav-btn-primary" onclick="openAuthModal('signup')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7.5" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+            Sign Up
+          </button>
+        </div>
+
+        <div id="authUserCluster" style="display: none; align-items: center; gap: 10px;">
+          <div class="user-pill" id="navUserPill">
+            <span id="navUserIcon">👤</span>
+            <span id="navUserName">User</span>
+            <span id="navUserRoleBadge" class="nav-role-badge role-admin">ADMIN</span>
+          </div>
+          <button class="nav-btn nav-btn-ghost" onclick="handleLogout()" title="Log Out">
+            🚪 Log Out
+          </button>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <a href="/api/docs/" target="_blank" class="nav-btn nav-btn-ghost" style="padding: 8px 12px;" title="Swagger API Docs">
+            📚 Docs
           </a>
-          <a href="/admin/" target="_blank" class="nav-btn nav-btn-ghost">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            Admin
+          <a href="/admin/" target="_blank" class="nav-btn nav-btn-ghost" style="padding: 8px 12px;" title="Django Admin Portal">
+            🛡️ Admin
           </a>
         </div>
       </div>
@@ -817,14 +1206,14 @@
       </p>
 
       <div class="hero-actions">
-        <a href="/api/docs/" target="_blank" class="nav-btn nav-btn-primary" style="padding: 13px 28px; font-size: 1rem;">
-          🚀 Open Interactive Swagger UI
+        <button onclick="openAuthModal('signup')" class="nav-btn nav-btn-primary" style="padding: 13px 28px; font-size: 1rem;" id="heroSignupBtn">
+          ✨ Get Started / Create Account
+        </button>
+        <a href="/api/docs/" target="_blank" class="nav-btn nav-btn-ghost" style="padding: 13px 26px; font-size: 1rem;">
+          🚀 Open Swagger UI
         </a>
         <a href="#simulator" class="nav-btn nav-btn-ghost" style="padding: 13px 26px; font-size: 1rem;">
           ⚡ Live Testing Console
-        </a>
-        <a href="/admin/" target="_blank" class="nav-btn nav-btn-ghost" style="padding: 13px 26px; font-size: 1rem;">
-          🛡️ Django Admin
         </a>
       </div>
     </section>
@@ -988,6 +1377,124 @@
     </section>
   </main>
 
+  <!-- =========================================================
+       AUTHENTICATION MODAL (LOGIN & SIGNUP TABS)
+       ========================================================= -->
+  <div id="authModalOverlay" class="modal-overlay" onclick="handleModalOverlayClick(event)">
+    <div class="auth-modal" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeAuthModal()" title="Close">✕</button>
+
+      <div class="auth-header">
+        <div class="auth-logo">🏢</div>
+        <h2 class="auth-title" id="authModalTitle">Welcome Back</h2>
+        <p class="auth-subtitle" id="authModalSubtitle">Sign in to your Annapurna CRM portal</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">Log In</button>
+        <button class="auth-tab-btn" id="tabBtnSignup" onclick="switchAuthTab('signup')">Sign Up</button>
+      </div>
+
+      <!-- Alert Box -->
+      <div id="authAlert" class="auth-alert"></div>
+
+      <!-- ================= LOGIN FORM ================= -->
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+        <!-- Quick Fill Demo Buttons (Admin & CRM) -->
+        <div class="demo-creds-box">
+          <div class="demo-creds-title">⚡ Quick Login (Click to Fill):</div>
+          <div class="demo-creds-buttons">
+            <button type="button" class="btn-demo-pill" onclick="fillCredentials('rahul@gmail.com', 'admin@123')">
+              <span>👑 Admin Role</span>
+              <span class="sub">rahul@gmail.com</span>
+            </button>
+            <button type="button" class="btn-demo-pill" onclick="fillCredentials('rohan@gmail.com', 'admin@123')">
+              <span>🎧 CRM Role</span>
+              <span class="sub">rohan@gmail.com</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Username or Email</label>
+          <div class="input-wrapper">
+            <input type="text" id="loginEmail" class="form-input" placeholder="e.g. admin or rahul@example.com" required autocomplete="username">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+            <button type="button" class="input-toggle-pwd" onclick="togglePasswordVisibility('loginPassword', this)">👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" class="form-submit-btn" id="loginSubmitBtn">
+          <span>Log In to CRM</span>
+        </button>
+
+        <div class="auth-footer">
+          Don't have an account? <a onclick="switchAuthTab('signup')">Create an account</a>
+        </div>
+      </form>
+
+      <!-- ================= SIGNUP FORM ================= -->
+      <form id="signupForm" style="display: none;" onsubmit="handleSignupSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" id="signupFirstName" class="form-input" placeholder="e.g. Rahul">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" id="signupLastName" class="form-input" placeholder="e.g. Sharma">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Username <span style="color: #ef4444;">*</span></label>
+          <input type="text" id="signupUsername" class="form-input" placeholder="Choose unique username" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address <span style="color: #ef4444;">*</span></label>
+          <input type="email" id="signupEmail" class="form-input" placeholder="name@company.com" required autocomplete="email">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" id="signupPhone" class="form-input" placeholder="+91 9876543210">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Role</label>
+            <select id="signupRole" class="form-select">
+              <option value="CRM" selected>CRM Agent</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password <span style="color: #ef4444;">*</span> (min 6 characters)</label>
+          <div class="input-wrapper">
+            <input type="password" id="signupPassword" class="form-input" placeholder="Create strong password" required minlength="6" autocomplete="new-password">
+            <button type="button" class="input-toggle-pwd" onclick="togglePasswordVisibility('signupPassword', this)">👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" class="form-submit-btn" id="signupSubmitBtn">
+          <span>Create CRM Account</span>
+        </button>
+
+        <div class="auth-footer">
+          Already have an account? <a onclick="switchAuthTab('login')">Log In here</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="container">
       <p>
@@ -1018,7 +1525,296 @@
       }
     });
 
-    // Test Simulator Logic
+    // =========================================================
+    // AUTH MODAL & STATE MANAGEMENT LOGIC
+    // =========================================================
+    function openAuthModal(tab = 'login') {
+      const overlay = document.getElementById('authModalOverlay');
+      overlay.classList.add('active');
+      switchAuthTab(tab);
+      hideAuthAlert();
+    }
+
+    function closeAuthModal() {
+      const overlay = document.getElementById('authModalOverlay');
+      overlay.classList.remove('active');
+    }
+
+    function handleModalOverlayClick(e) {
+      if (e.target.id === 'authModalOverlay') {
+        closeAuthModal();
+      }
+    }
+
+    function switchAuthTab(tab) {
+      const tabLogin = document.getElementById('tabBtnLogin');
+      const tabSignup = document.getElementById('tabBtnSignup');
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+      const title = document.getElementById('authModalTitle');
+      const subtitle = document.getElementById('authModalSubtitle');
+
+      hideAuthAlert();
+
+      if (tab === 'login') {
+        tabLogin.classList.add('active');
+        tabSignup.classList.remove('active');
+        loginForm.style.display = 'block';
+        signupForm.style.display = 'none';
+        title.innerText = 'Welcome Back';
+        subtitle.innerText = 'Sign in to your Annapurna CRM portal';
+      } else {
+        tabSignup.classList.add('active');
+        tabLogin.classList.remove('active');
+        signupForm.style.display = 'block';
+        loginForm.style.display = 'none';
+        title.innerText = 'Create Account';
+        subtitle.innerText = 'Register new CRM Agent or Admin';
+      }
+    }
+
+    function showAuthAlert(message, type = 'error') {
+      const alert = document.getElementById('authAlert');
+      alert.style.display = 'block';
+      alert.className = `auth-alert alert-${type}`;
+      alert.innerText = message;
+    }
+
+    function hideAuthAlert() {
+      const alert = document.getElementById('authAlert');
+      alert.className = 'auth-alert';
+      alert.style.display = 'none';
+      alert.innerText = '';
+    }
+
+    function fillCredentials(email, pwd) {
+      document.getElementById('loginEmail').value = email;
+      document.getElementById('loginPassword').value = pwd;
+      hideAuthAlert();
+    }
+
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerText = '🙈';
+      } else {
+        input.type = 'password';
+        btn.innerText = '👁️';
+      }
+    }
+
+    // Handle Login API
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('loginSubmitBtn');
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      if (!email || !password) {
+        showAuthAlert('Please enter both username/email and password.', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Authenticating...';
+      hideAuthAlert();
+
+      try {
+        const res = await fetch('/api/v1/auth/login/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          localStorage.setItem('annapurna_access', data.tokens.access);
+          localStorage.setItem('annapurna_refresh', data.tokens.refresh);
+          localStorage.setItem('annapurna_user', JSON.stringify(data.user));
+
+          const roleDisplay = data.user.role === 'admin' ? '👑 Admin' : '🎧 CRM Agent';
+          const userName = data.user.first_name || data.user.username;
+          showAuthAlert(`✅ Welcome back, ${userName}! Logged in as ${roleDisplay}.`, 'success');
+          updateAuthUI();
+
+          setTimeout(() => {
+            closeAuthModal();
+            fetchMetrics(); // Auto refresh metrics with token!
+          }, 850);
+        } else {
+          let errText = 'Invalid email or password.';
+          if (typeof data.error === 'string') {
+            errText = data.error;
+          } else if (data.error && data.error.detail) {
+            if (typeof data.error.detail === 'string') {
+              errText = data.error.detail;
+            } else if (typeof data.error.detail === 'object') {
+              errText = Object.entries(data.error.detail).map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(', ') : v}`).join(' | ');
+            }
+          } else if (data.detail) {
+            errText = typeof data.detail === 'string' ? data.detail : JSON.stringify(data.detail);
+          }
+          showAuthAlert(errText, 'error');
+        }
+      } catch (err) {
+        showAuthAlert('Network error. Make sure backend server is running.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Log In to CRM';
+      }
+    }
+
+    // Handle Signup API
+    async function handleSignupSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('signupSubmitBtn');
+      const payload = {
+        username: document.getElementById('signupUsername').value.trim(),
+        email: document.getElementById('signupEmail').value.trim(),
+        password: document.getElementById('signupPassword').value,
+        first_name: document.getElementById('signupFirstName').value.trim(),
+        last_name: document.getElementById('signupLastName').value.trim(),
+        phone: document.getElementById('signupPhone').value.trim(),
+        role: document.getElementById('signupRole').value,
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Creating account...';
+      hideAuthAlert();
+
+      try {
+        const res = await fetch('/api/v1/auth/signup/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          if (data.tokens) {
+            localStorage.setItem('annapurna_access', data.tokens.access);
+            localStorage.setItem('annapurna_refresh', data.tokens.refresh);
+          }
+          if (data.user) {
+            localStorage.setItem('annapurna_user', JSON.stringify(data.user));
+          }
+
+          showAuthAlert('Account created successfully! Welcome to Annapurna CRM.', 'success');
+          updateAuthUI();
+
+          setTimeout(() => {
+            closeAuthModal();
+            fetchMetrics();
+          }, 900);
+        } else {
+          const errs = [];
+          for (let k in data) {
+            errs.push(`${k}: ${Array.isArray(data[k]) ? data[k].join(', ') : data[k]}`);
+          }
+          showAuthAlert(errs.join(' | ') || 'Registration failed. Check your inputs.');
+        }
+      } catch (err) {
+        showAuthAlert('Network error during registration.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Create CRM Account';
+      }
+    }
+
+    // Handle Logout
+    async function handleLogout() {
+      const refresh = localStorage.getItem('annapurna_refresh');
+      const access = localStorage.getItem('annapurna_access');
+
+      try {
+        if (refresh && access) {
+          await fetch('/api/v1/auth/logout/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${access}`
+            },
+            body: JSON.stringify({ refresh })
+          });
+        }
+      } catch (e) {
+        // ignore network error on logout
+      } finally {
+        localStorage.removeItem('annapurna_access');
+        localStorage.removeItem('annapurna_refresh');
+        localStorage.removeItem('annapurna_user');
+        updateAuthUI();
+      }
+    }
+
+    function updateAuthUI() {
+      const userStr = localStorage.getItem('annapurna_user');
+      const token = localStorage.getItem('annapurna_access');
+      const guestCluster = document.getElementById('authGuestCluster');
+      const userCluster = document.getElementById('authUserCluster');
+      const heroSignupBtn = document.getElementById('heroSignupBtn');
+
+      if (token && userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          guestCluster.style.display = 'none';
+          userCluster.style.display = 'flex';
+
+          const userName = user.first_name ? `${user.first_name} ${user.last_name || ''}`.trim() : user.username;
+          document.getElementById('navUserName').innerText = userName || user.email || 'User';
+
+          const roleBadge = document.getElementById('navUserRoleBadge');
+          const userIcon = document.getElementById('navUserIcon');
+          const isAdmin = (user.role === 'admin');
+
+          if (roleBadge) {
+            if (isAdmin) {
+              roleBadge.innerText = 'ADMIN';
+              roleBadge.className = 'nav-role-badge role-admin';
+            } else {
+              roleBadge.innerText = 'CRM AGENT';
+              roleBadge.className = 'nav-role-badge role-crm';
+            }
+          }
+
+          if (userIcon) {
+            userIcon.innerText = isAdmin ? '👑' : '🎧';
+          }
+
+          if (heroSignupBtn) {
+            heroSignupBtn.innerText = isAdmin ? '👑 Open Admin Live Console' : '🎧 Open CRM Simulator';
+            heroSignupBtn.onclick = () => {
+              document.getElementById('simulator').scrollIntoView({ behavior: 'smooth' });
+            };
+          }
+        } catch (e) {
+          guestCluster.style.display = 'flex';
+          userCluster.style.display = 'none';
+        }
+      } else {
+        guestCluster.style.display = 'flex';
+        userCluster.style.display = 'none';
+        if (heroSignupBtn) {
+          heroSignupBtn.innerText = '✨ Get Started / Create Account';
+          heroSignupBtn.onclick = () => openAuthModal('signup');
+        }
+      }
+    }
+
+    // Auto open modal if URL is /login/ or /signup/
+    if (window.location.pathname.includes('/login')) {
+      openAuthModal('login');
+    } else if (window.location.pathname.includes('/signup')) {
+      openAuthModal('signup');
+    }
+
+    // Check auth on load
+    updateAuthUI();
+
+    // =========================================================
+    // TEST SIMULATOR LOGIC (Auto-includes JWT if logged in!)
+    // =========================================================
     const sampleCallSid = "sim_" + Math.random().toString(36).substring(2, 10);
     const consoleBox = document.getElementById("responseBody");
     const statusBox = document.getElementById("responseStatus");
@@ -1076,15 +1872,28 @@
     async function fetchMetrics() {
       statusBox.innerText = "FETCHING METRICS...";
       try {
-        const res = await fetch("/api/v1/dashboard/metrics/");
+        const headers = {};
+        const token = localStorage.getItem('annapurna_access');
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+        const res = await fetch("/api/v1/dashboard/metrics/", { headers });
         if (res.status === 401) {
           statusBox.innerText = "401 UNAUTHORIZED";
-          consoleBox.innerText = `// /api/v1/dashboard/metrics/ requires JWT Authentication.\n// Log in via Swagger Docs (/api/docs/) to get your access token!`;
+          consoleBox.innerText = `// /api/v1/dashboard/metrics/ requires JWT Authentication.\n// Click the 'Log In' button in the navbar to sign in!`;
           return;
         }
         const data = await res.json();
         statusBox.innerText = `STATUS: ${res.status}`;
-        consoleBox.innerText = JSON.stringify(data, null, 2);
+        consoleBox.innerText = `// GET /api/v1/dashboard/metrics/ [${res.status}]\n` + JSON.stringify(data, null, 2);
+
+        // Update stat counters on page if available
+        if (data.overview) {
+          if (data.overview.total_leads !== undefined) document.getElementById('stat-leads').innerText = data.overview.total_leads;
+          if (data.overview.total_calls !== undefined) document.getElementById('stat-calls').innerText = data.overview.total_calls;
+          if (data.overview.whatsapp_sent !== undefined) document.getElementById('stat-whatsapp').innerText = data.overview.whatsapp_sent;
+          if (data.overview.pending_followups !== undefined) document.getElementById('stat-followups').innerText = data.overview.pending_followups;
+        }
       } catch (err) {
         statusBox.innerText = "ERROR";
         consoleBox.innerText = String(err);

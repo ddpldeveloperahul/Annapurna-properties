@@ -23,8 +23,8 @@ from drf_spectacular.utils import extend_schema
 
 from . import services
 from .filters import LeadFilter
-from .models import Agent, Call, CallEvent, Followup, Lead, PasswordResetOTP, User, WhatsAppMessage
-from .permissions import IsStaffOrReadOnly
+from .models import Agent, Call, CallEvent, Followup, Lead, LeadActivity, PasswordResetOTP, User, WhatsAppMessage
+from .permissions import IsAdminOrCrmAgent, IsAdminRoleOrStaff, IsStaffOrReadOnly
 from .serializers import (
     AgentSerializer, CallSerializer, CallStatusWebhookSerializer, CallSummarySerializer,
     CallTranscriptSerializer, ChangePasswordSerializer, FollowupSerializer, IncomingCallWebhookSerializer,
@@ -46,16 +46,72 @@ def get_tokens_for_user(user):
 
 
 # --- Accounts Views --------------------------------------------------------
-class AccountViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.all()
+class AccountViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by("-id")
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsAdminRoleOrStaff]
+
+    @extend_schema(request=None, responses={200: UserSerializer})
+    @action(detail=True, methods=["post"], permission_classes=[IsAdminRoleOrStaff])
+    def activate(self, request, pk=None):
+        user = self.get_object()
+        user.is_active = True
+        user.save(update_fields=["is_active"])
+        if hasattr(user, "agent_profile"):
+            user.agent_profile.is_active = True
+            user.agent_profile.save(update_fields=["is_active", "updated_at"])
+        return Response({
+            "message": f"User {user.username} activated successfully",
+            "user": UserSerializer(user).data
+        }, status=status.HTTP_200_OK)
+
+    @extend_schema(request=None, responses={200: UserSerializer})
+    @action(detail=True, methods=["post"], permission_classes=[IsAdminRoleOrStaff])
+    def deactivate(self, request, pk=None):
+        user = self.get_object()
+        user.is_active = False
+        user.save(update_fields=["is_active"])
+        if hasattr(user, "agent_profile"):
+            user.agent_profile.is_active = False
+            user.agent_profile.save(update_fields=["is_active", "updated_at"])
+        return Response({
+            "message": f"User {user.username} deactivated successfully",
+            "user": UserSerializer(user).data
+        }, status=status.HTTP_200_OK)
 
 
-class AgentViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Agent.objects.filter(is_active=True)
+class AgentViewSet(viewsets.ModelViewSet):
+    queryset = Agent.objects.all().select_related("user").order_by("-id")
     serializer_class = AgentSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAdminRoleOrStaff]
+
+    @extend_schema(request=None, responses={200: AgentSerializer})
+    @action(detail=True, methods=["post"], permission_classes=[IsAdminRoleOrStaff])
+    def activate(self, request, pk=None):
+        agent = self.get_object()
+        agent.is_active = True
+        agent.save(update_fields=["is_active", "updated_at"])
+        if agent.user:
+            agent.user.is_active = True
+            agent.user.save(update_fields=["is_active"])
+        return Response({
+            "message": f"CRM Agent {agent.display_name} activated successfully",
+            "agent": AgentSerializer(agent).data
+        }, status=status.HTTP_200_OK)
+
+    @extend_schema(request=None, responses={200: AgentSerializer})
+    @action(detail=True, methods=["post"], permission_classes=[IsAdminRoleOrStaff])
+    def deactivate(self, request, pk=None):
+        agent = self.get_object()
+        agent.is_active = False
+        agent.save(update_fields=["is_active", "updated_at"])
+        if agent.user:
+            agent.user.is_active = False
+            agent.user.save(update_fields=["is_active"])
+        return Response({
+            "message": f"CRM Agent {agent.display_name} deactivated successfully",
+            "agent": AgentSerializer(agent).data
+        }, status=status.HTTP_200_OK)
 
 
 class MeView(APIView):
@@ -241,7 +297,7 @@ class ResetPasswordConfirmView(APIView):
 # --- Leads Views -----------------------------------------------------------
 class LeadViewSet(viewsets.ModelViewSet):
     queryset = Lead.objects.all().select_related("assigned_to")
-    permission_classes = [IsStaffOrReadOnly]
+    permission_classes = [IsAdminOrCrmAgent]
     filterset_class = LeadFilter
     search_fields = ["name", "mobile", "location", "display_id"]
     ordering_fields = ["created_at", "last_activity_at", "status"]
@@ -253,6 +309,24 @@ class LeadViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return LeadDetailSerializer
         return LeadReadSerializer
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        assigned_to = serializer.validated_data.get("assigned_to")
+        if not assigned_to and user and getattr(user, "role", None) == User.Role.CRM and hasattr(user, "agent_profile"):
+            lead = serializer.save(assigned_to=user.agent_profile)
+        else:
+            lead = serializer.save()
+
+        actor = user if (user and user.is_authenticated) else None
+        role_label = getattr(user, "role", "Staff") if user else "System"
+        actor_name = (user.get_full_name() or user.username) if user and user.is_authenticated else "System"
+        LeadActivity.objects.create(
+            lead=lead,
+            activity_type=LeadActivity.ActivityType.NOTE,
+            description=f"Lead created by {actor_name} ({role_label})",
+            actor=actor,
+        )
 
     def perform_update(self, serializer):
         old_status = serializer.instance.status

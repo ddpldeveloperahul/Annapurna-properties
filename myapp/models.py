@@ -54,6 +54,7 @@ class Agent(TimeStampedModel):
     display_name = models.CharField(max_length=120)
     is_active = models.BooleanField(default=True)
     max_active_leads = models.PositiveIntegerField(default=50)
+    last_assigned_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         db_table = "accounts_agent"

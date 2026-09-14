@@ -5,13 +5,29 @@ the same, idempotent path.
 import logging
 from django.conf import settings
 from django.db import transaction
+from django.db.models import F
 from django.utils import timezone
 
 from integrations.whatsapp.client import WhatsAppClient, WhatsAppSendError
-from .models import Lead, LeadActivity, WhatsAppMessage
+from .models import Agent, Lead, LeadActivity, WhatsAppMessage
 from .selectors import get_lead_by_mobile
 
 logger = logging.getLogger("anpurna_properties")
+
+
+@transaction.atomic
+def auto_assign_agent_to_lead(lead: Lead):
+    if lead.assigned_to and lead.assigned_to.is_active:
+        return lead.assigned_to
+
+    agent = Agent.objects.filter(is_active=True).select_for_update(skip_locked=True).order_by(F('last_assigned_at').asc(nulls_first=True)).first()
+    
+    if agent:
+        assign_agent(lead, agent)
+        agent.last_assigned_at = timezone.now()
+        agent.save(update_fields=["last_assigned_at", "updated_at"])
+        return agent
+    return None
 
 
 @transaction.atomic
@@ -37,6 +53,7 @@ def create_or_update_lead_from_call(*, mobile, name, requirement_type, property_
             description="New AI call logged against existing lead",
         )
         logger.info("Updated existing lead %s from call", existing.display_id)
+        auto_assign_agent_to_lead(existing)
         return existing, False
 
     lead = Lead.objects.create(
@@ -59,6 +76,7 @@ def create_or_update_lead_from_call(*, mobile, name, requirement_type, property_
         description="Lead created from AI call",
     )
     logger.info("Created new lead %s from call", lead.display_id)
+    auto_assign_agent_to_lead(lead)
     return lead, True
 
 

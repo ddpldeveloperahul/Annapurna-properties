@@ -11,13 +11,78 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = BaseUserAdmin.fieldsets + (
         ("CRM Profile", {"fields": ("phone", "role")}),
     )
-    list_display = ["id","username", "email", "first_name", "last_name", "role", "is_staff"]
+    list_display = ["id", "username", "email", "first_name", "last_name", "role", "is_active", "is_staff"]
+    list_editable = ["is_active"]
+    list_filter = ["role", "is_active", "is_staff"]
+    actions = ["activate_users", "deactivate_users"]
+
+    @admin.action(description="Activate selected users & CRM profiles")
+    def activate_users(self, request, queryset):
+        count = 0
+        for user in queryset:
+            user.is_active = True
+            user.save(update_fields=["is_active"])
+            if hasattr(user, "agent_profile"):
+                user.agent_profile.is_active = True
+                user.agent_profile.save(update_fields=["is_active", "updated_at"])
+            count += 1
+        self.message_user(request, f"{count} user(s) activated successfully.")
+
+    @admin.action(description="Deactivate selected users & CRM profiles")
+    def deactivate_users(self, request, queryset):
+        count = 0
+        for user in queryset:
+            user.is_active = False
+            user.save(update_fields=["is_active"])
+            if hasattr(user, "agent_profile"):
+                user.agent_profile.is_active = False
+                user.agent_profile.save(update_fields=["is_active", "updated_at"])
+            count += 1
+        self.message_user(request, f"{count} user(s) deactivated successfully.")
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if hasattr(obj, "agent_profile") and obj.agent_profile.is_active != obj.is_active:
+            obj.agent_profile.is_active = obj.is_active
+            obj.agent_profile.save(update_fields=["is_active", "updated_at"])
 
 
 @admin.register(Agent)
 class AgentAdmin(admin.ModelAdmin):
-    list_display = ["id","display_name", "user", "is_active", "max_active_leads"]
+    list_display = ["id", "display_name", "user", "is_active", "max_active_leads"]
+    list_editable = ["is_active"]
     list_filter = ["is_active"]
+    actions = ["activate_agents", "deactivate_agents"]
+
+    @admin.action(description="Activate selected CRM agents")
+    def activate_agents(self, request, queryset):
+        count = 0
+        for agent in queryset:
+            agent.is_active = True
+            agent.save(update_fields=["is_active", "updated_at"])
+            if agent.user:
+                agent.user.is_active = True
+                agent.user.save(update_fields=["is_active"])
+            count += 1
+        self.message_user(request, f"{count} CRM agent(s) activated successfully.")
+
+    @admin.action(description="Deactivate selected CRM agents")
+    def deactivate_agents(self, request, queryset):
+        count = 0
+        for agent in queryset:
+            agent.is_active = False
+            agent.save(update_fields=["is_active", "updated_at"])
+            if agent.user:
+                agent.user.is_active = False
+                agent.user.save(update_fields=["is_active"])
+            count += 1
+        self.message_user(request, f"{count} CRM agent(s) deactivated successfully.")
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if obj.user and obj.user.is_active != obj.is_active:
+            obj.user.is_active = obj.is_active
+            obj.user.save(update_fields=["is_active"])
 
 
 @admin.register(PasswordResetOTP)
